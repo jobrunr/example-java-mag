@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <jobrunr.version>1.2.0</jobrunr.version>
+        <jobrunr.version>1.2.2</jobrunr.version>
     </properties>
 
     <dependencies>
