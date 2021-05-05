@@ -11,12 +11,12 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.4.RELEASE</version>
+        <version>2.4.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
-        <jobrunr.version>1.2.2</jobrunr.version>
+        <jobrunr.version>2.0.0</jobrunr.version>
     </properties>
 
     <dependencies>

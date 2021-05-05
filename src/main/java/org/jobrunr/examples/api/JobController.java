@@ -11,6 +11,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 
+import static java.time.Instant.now;
 import static java.time.temporal.ChronoUnit.HOURS;
 
 @RestController
@@ -34,7 +35,7 @@ public class JobController {
     public String scheduleExampleJob(
             @RequestParam(value = "name", defaultValue = "World") String name,
             @RequestParam(value = "when", defaultValue = "PT3H") String when) {
-        jobScheduler.schedule(() -> sampleService.executeSampleJob("Hello " + name), Instant.now().plus(Duration.parse(when)));
+        jobScheduler.schedule(now().plus(Duration.parse(when)), () -> sampleService.executeSampleJob("Hello " + name));
         return "Job Enqueued";
     }
 }

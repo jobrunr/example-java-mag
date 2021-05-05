@@ -17,6 +17,6 @@ public class JobRunrApplication {
         ConfigurableApplicationContext applicationContext = SpringApplication.run(JobRunrApplication.class, args);
 
         JobScheduler jobScheduler = applicationContext.getBean(JobScheduler.class);
-        jobScheduler.<SampleJobService>scheduleRecurrently("recurring-sample-job", x -> x.executeSampleJob("Hello from recurring job"), every5minutes());
+        jobScheduler.<SampleJobService>scheduleRecurrently("recurring-sample-job", every5minutes(), x -> x.executeSampleJob("Hello from recurring job"));
     }
 }
