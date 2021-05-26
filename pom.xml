@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <jobrunr.version>2.0.0</jobrunr.version>
+        <jobrunr.version>3.0.0</jobrunr.version>
         <sql-lite.version>3.30.1</sql-lite.version>
     </properties>
 
