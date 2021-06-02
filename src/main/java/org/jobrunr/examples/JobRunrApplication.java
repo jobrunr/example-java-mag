@@ -2,6 +2,7 @@ package org.jobrunr.examples;
 
 import org.jobrunr.examples.services.SampleJobService;
 import org.jobrunr.scheduling.JobScheduler;
+import org.jobrunr.scheduling.cron.Cron;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,5 +19,6 @@ public class JobRunrApplication {
 
         JobScheduler jobScheduler = applicationContext.getBean(JobScheduler.class);
         jobScheduler.<SampleJobService>scheduleRecurrently("recurring-sample-job", every5minutes(), x -> x.executeSampleJob("Hello from recurring job"));
+        jobScheduler.scheduleRecurrently(Cron.daily(), () -> System.out.println("Easy!"));
     }
 }
