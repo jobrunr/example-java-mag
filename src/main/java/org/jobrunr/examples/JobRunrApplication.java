@@ -19,6 +19,5 @@ public class JobRunrApplication {
 
         JobScheduler jobScheduler = applicationContext.getBean(JobScheduler.class);
         jobScheduler.<SampleJobService>scheduleRecurrently("recurring-sample-job", every5minutes(), x -> x.executeSampleJob("Hello from recurring job"));
-        jobScheduler.scheduleRecurrently(Cron.daily(), () -> System.out.println("Easy!"));
     }
 }
