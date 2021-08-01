@@ -15,7 +15,7 @@ public class JobRunrExampleConfiguration {
     @Bean
     public SQLiteDataSource dataSource() throws IOException {
         final Path path = Paths.get(System.getProperty("java.io.tmpdir"), "jobrunr-example.db");
-        Files.delete(path);
+        if (Files.exists(path)) Files.delete(path);
         final SQLiteDataSource dataSource = new SQLiteDataSource();
         dataSource.setUrl("jdbc:sqlite:" + path);
         return dataSource;
