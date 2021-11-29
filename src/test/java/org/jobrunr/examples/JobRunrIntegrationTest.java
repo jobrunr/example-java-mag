@@ -31,10 +31,10 @@ public class JobRunrIntegrationTest {
 
     @Test
     public void givenEndpoint_whenJobEnqueued_thenJobIsProcessedWithin30Seconds() {
-        String response = enqueueJobViaRest("from-test");
-        assertThat(response).startsWith("Job Enqueued");
+        String responseBody = enqueueJobViaRest("from-test");
+        assertThat(responseBody).startsWith("Job Enqueued");
 
-        final UUID enqueuedJobId = UUID.fromString(substringAfter(response, ": "));
+        final UUID enqueuedJobId = UUID.fromString(substringAfter(responseBody, ": "));
         await()
                 .atMost(30, TimeUnit.SECONDS)
                 .until(() -> storageProvider.getJobById(enqueuedJobId).hasState(SUCCEEDED));
@@ -42,10 +42,10 @@ public class JobRunrIntegrationTest {
 
     @Test
     public void givenEndpoint_whenJobScheduled_thenJobIsScheduled() {
-        String response = scheduleJobViaRest("from-test", Duration.ofHours(3));
-        assertThat(response).startsWith("Job Scheduled");
+        String responseBody = scheduleJobViaRest("from-test", Duration.ofHours(3));
+        assertThat(responseBody).startsWith("Job Scheduled");
 
-        final UUID scheduledJobId = UUID.fromString(substringAfter(response, ": "));
+        final UUID scheduledJobId = UUID.fromString(substringAfter(responseBody, ": "));
         await()
                 .atMost(30, TimeUnit.SECONDS)
                 .until(() -> storageProvider.getJobById(scheduledJobId).hasState(SCHEDULED));
