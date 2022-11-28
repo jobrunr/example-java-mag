@@ -12,7 +12,11 @@ public class SampleJobService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Recurring(id = "my-recurring-job", cron = "*/15 * * * *")
-    @Job(name = "A recurring job")
+    @Job(name = "A recurring job", labels = {"Annotation based", "recurring"})
+    public void annotationRecurringJob() throws InterruptedException {
+        recurringJob();
+    }
+
     public void recurringJob() throws InterruptedException {
         logger.info("The recurring job has begun.");
         try {
@@ -25,7 +29,11 @@ public class SampleJobService {
         }
     }
 
-    @Job(name = "The sample job with variable %0", retries = 2)
+    @Job(name = "The sample job with variable %0", retries = 2, labels = {"Annotation based"})
+    public void annotationExecuteSampleJob(String input) throws InterruptedException {
+        executeSampleJob(input);
+    }
+
     public void executeSampleJob(String input) throws InterruptedException {
         logger.info("The sample job has begun. The variable you passed is {}", input);
         try {

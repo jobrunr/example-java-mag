@@ -3,19 +3,17 @@ package org.jobrunr.examples.api;
 import org.jobrunr.examples.services.SampleJobService;
 import org.jobrunr.jobs.JobId;
 import org.jobrunr.scheduling.JobScheduler;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.time.Duration;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static java.time.Instant.now;
-import static java.time.temporal.ChronoUnit.HOURS;
+import static org.jobrunr.scheduling.JobBuilder.aJob;
+import static org.jobrunr.scheduling.RecurringJobBuilder.aRecurringJob;
 
 @RestController
 public class JobController {
@@ -28,9 +26,18 @@ public class JobController {
         this.sampleService = sampleService;
     }
 
+    @PostConstruct
+    public void createRecurringBuilderJob() {
+        jobScheduler.createRecurrently(aRecurringJob()
+                .withDetails(sampleService::recurringJob)
+                .withName("A recurring job")
+                .withCron("*/15 * * * *")
+                .withLabels("Annotation based", "recurring", "Builder based"));
+    }
+
     @GetMapping("/enqueue-example-job")
     public String enqueueExampleJob(@RequestParam(value = "name", defaultValue = "World") String name) {
-        final JobId enqueuedJobId = jobScheduler.enqueue(() -> sampleService.executeSampleJob("Hello " + name));
+        final JobId enqueuedJobId = jobScheduler.enqueue(() -> sampleService.annotationExecuteSampleJob("Hello " + name));
         return "Job Enqueued: " + enqueuedJobId.toString();
     }
 
@@ -44,7 +51,20 @@ public class JobController {
     public String scheduleExampleJob(
             @RequestParam(value = "name", defaultValue = "World") String name,
             @RequestParam(value = "when", defaultValue = "PT3H") String when) {
-        final JobId scheduledJobId = jobScheduler.schedule(now().plus(Duration.parse(when)), () -> sampleService.executeSampleJob("Hello " + name));
+        final JobId scheduledJobId = jobScheduler.schedule(now().plus(Duration.parse(when)), () -> sampleService.annotationExecuteSampleJob("Hello " + name));
         return "Job Scheduled: " + scheduledJobId.toString();
+    }
+
+    @GetMapping("/create-example-job")
+    public String createExampleJob(
+            @RequestParam(value = "name", defaultValue = "World") String name,
+            @RequestParam(value = "when", defaultValue = "PT3H") String when) {
+        String bla = "hello " + name;
+        final JobId createJobId = jobScheduler.create(aJob()
+                .withName("The sample job with variable Hello " + name)
+                .withDetails(() -> sampleService.executeSampleJob(bla))
+                .scheduleIn(Duration.parse(when))
+                .withLabels("Builder based"));
+        return "Job created: " + createJobId.toString();
     }
 }

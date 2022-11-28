@@ -16,7 +16,7 @@
     </parent>
 
     <properties>
-        <jobrunr.version>4.0.3</jobrunr.version>
+        <jobrunr.version>1.0.0-SNAPSHOT</jobrunr.version> <!-- TODO set to version 6 -->
         <sql-lite.version>3.30.1</sql-lite.version>
     </properties>
 
