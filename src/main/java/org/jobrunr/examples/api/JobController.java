@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import java.time.Duration;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 import static java.time.Instant.now;
 import static org.jobrunr.scheduling.JobBuilder.aJob;
@@ -28,11 +29,14 @@ public class JobController {
 
     @PostConstruct
     public void createRecurringBuilderJob() {
-        jobScheduler.createRecurrently(aRecurringJob()
-                .withDetails(sampleService::recurringJob)
-                .withName("A recurring job")
-                .withCron("*/15 * * * *")
-                .withLabels("Annotation based", "recurring", "Builder based"));
+        IntStream.range(0, 30)
+                .forEach((i) ->
+                        jobScheduler.createRecurrently(aRecurringJob()
+                                .withId("" + i)
+                                .withDetails(sampleService::recurringJob)
+                                .withName("A recurring job")
+                                .withCron("*/15 * * * *")
+                                .withLabels("recurring", "Builder based")));
     }
 
     @GetMapping("/enqueue-example-job")
