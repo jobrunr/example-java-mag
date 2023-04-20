@@ -15,8 +15,19 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <repositories>
+        <repository>
+            <id>JobRunrPro</id>
+            <url>https://repo.jobrunr.io/private-releases/</url>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+
     <properties>
-        <jobrunr.version>4.0.3</jobrunr.version>
+        <jobrunr.version>6.1.3</jobrunr.version>
         <sql-lite.version>3.30.1</sql-lite.version>
     </properties>
 
@@ -35,14 +46,24 @@
         </dependency>
         <dependency>
             <groupId>org.jobrunr</groupId>
-            <artifactId>jobrunr-spring-boot-starter</artifactId>
+            <artifactId>jobrunr-spring-boot-2-starter</artifactId>
             <version>${jobrunr.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.1</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.mongodb</groupId>-->
+<!--            <artifactId>mongodb-driver-sync</artifactId>-->
+<!--        </dependency>-->
 
         <!-- Test dependencies -->
         <dependency>
