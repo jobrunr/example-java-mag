@@ -2,11 +2,9 @@ package org.jobrunr.examples;
 
 import org.jobrunr.storage.StorageProvider;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -17,10 +15,9 @@ import static org.awaitility.Awaitility.await;
 import static org.jobrunr.jobs.states.StateName.SCHEDULED;
 import static org.jobrunr.jobs.states.StateName.SUCCEEDED;
 import static org.jobrunr.utils.StringUtils.substringAfter;
-import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.DEFINED_PORT;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(webEnvironment = DEFINED_PORT, classes = JobRunrApplication.class)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 public class JobRunrIntegrationTest {
 
     @Autowired
@@ -52,10 +49,10 @@ public class JobRunrIntegrationTest {
     }
 
     private String enqueueJobViaRest(String input) {
-        return restTemplate.getForObject("http://localhost:8080/enqueue-example-job?name=" + input, String.class);
+        return restTemplate.getForObject("/enqueue-example-job?name=" + input, String.class);
     }
 
     private String scheduleJobViaRest(String input, Duration duration) {
-        return restTemplate.getForObject("http://localhost:8080/schedule-example-job?name=" + input + "&when=" + duration.toString(), String.class);
+        return restTemplate.getForObject("/schedule-example-job?name=" + input + "&when=" + duration.toString(), String.class);
     }
 }
