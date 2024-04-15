@@ -11,6 +11,16 @@ This project has 2 packages:
 - **org.jobrunr.examples.api**: It contains a simple `RestController` called [JobController](src/main/java/org/jobrunr/examples/api/JobController.java) which contains some
   methods (= endpoints) to enqueue, schedule, or delete jobs.
 
+## DB setup a Postgres database
+```shell
+docker run --name example-java-mag-pro-db -p 5432:5432 -e POSTGRES_PASSWORD=postgres -d postgres -c "shared_preload_libraries=pg_stat_statements"
+```
+
+Remove DB
+```shell
+docker rm -f example-java-mag-pro-db
+```
+
 ## How to run this project:
 - clone the project and open it in your favorite IDE that supports gradle
 - First, run the main method from
