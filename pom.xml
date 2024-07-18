@@ -23,7 +23,7 @@
     </parent>
 
     <properties>
-        <jobrunr.version>7.0.1</jobrunr.version>
+        <jobrunr.version>7.2.2</jobrunr.version>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
     </properties>
@@ -47,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>org.jobrunr</groupId>
-            <artifactId>jobrunr-pro-spring-boot-3-starter</artifactId>
+            <artifactId>jobrunr-pro-spring-boot-2-starter</artifactId>
             <version>${jobrunr.version}</version>
         </dependency>
         <dependency>
