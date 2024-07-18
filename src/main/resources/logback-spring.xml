@@ -1,0 +1,18 @@
+<configuration scan="30 seconds" debug="true">
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- requires org.fusesource.jansi:jansi on the class path <withJansi>true</withJansi> -->
+        <encoder>
+            <!-- when jansi-enabled try %highlight(%-5level) instead of %-5level -->
+            <pattern>%highlight(%-5level) %d{HH:mm:ss.SSS} [%thread] %logger{0} - %replace(%msg){"\n", ""}%n</pattern>
+        </encoder>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="org.jobrunr.server.BackgroundJobPerformer" level="TRACE"/>
+<!--    <logger name="org.jobrunr.server.JobZooKeeper"  level="TRACE"/>-->
+
+
+</configuration>

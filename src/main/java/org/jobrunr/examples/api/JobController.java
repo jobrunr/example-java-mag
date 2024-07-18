@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static java.time.Instant.now;
 
@@ -26,6 +27,19 @@ public class JobController {
     public String enqueueExampleJob(@RequestParam(value = "name", defaultValue = "World") String name) {
         final JobId enqueuedJobId = jobScheduler.enqueue(() -> sampleService.executeSampleJob("Hello " + name));
         return "Job Enqueued: " + enqueuedJobId.toString();
+    }
+
+    @GetMapping("/enqueue-example-jobs")
+    public String enqueueExampleJobs(
+            @RequestParam(value = "amount", defaultValue = "2000") int amount,
+            @RequestParam(value = "executionTime", defaultValue = "1000") int executionTime,
+            @RequestParam(value = "random", defaultValue = "false") boolean random
+    ) {
+        jobScheduler.enqueue(
+                Stream.iterate(0, i-> i+1).limit(amount).map(Object::toString),
+                id -> sampleService.executeSampleJob(id, executionTime, random)
+        );
+        return "Enqueued " + amount + " jobs with max execution time of" + executionTime + "ms";
     }
 
     @GetMapping("/enqueue-example-job-with-record")
