@@ -18,12 +18,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.1.12</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
-        <jobrunr.version>7.3.1</jobrunr.version>
+        <jobrunr.version>1.0.0-SNAPSHOT</jobrunr.version>
+<!--        <jobrunr.version>6.2.0</jobrunr.version>-->
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
     </properties>
@@ -48,6 +49,7 @@
         <dependency>
             <groupId>org.jobrunr</groupId>
             <artifactId>jobrunr-pro-spring-boot-3-starter</artifactId>
+<!--            <artifactId>jobrunr-spring-boot-3-starter</artifactId>-->
             <version>${jobrunr.version}</version>
         </dependency>
         <dependency>

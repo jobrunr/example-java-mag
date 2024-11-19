@@ -4,12 +4,14 @@ import org.jobrunr.examples.services.SampleJobInput;
 import org.jobrunr.examples.services.SampleJobService;
 import org.jobrunr.jobs.JobId;
 import org.jobrunr.scheduling.JobScheduler;
+import org.jobrunr.scheduling.RecurringJobBuilder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.UUID;
 
 import static java.time.Instant.now;
+import static org.jobrunr.scheduling.RecurringJobBuilder.aRecurringJob;
 
 @RestController
 public class JobController {
@@ -47,5 +49,20 @@ public class JobController {
             @RequestParam(value = "when", defaultValue = "PT3H") String when) {
         final JobId scheduledJobId = jobScheduler.schedule(now().plus(Duration.parse(when)), () -> sampleService.executeSampleJob("Hello " + name));
         return "Job Scheduled: " + scheduledJobId.toString();
+    }
+
+    @GetMapping("/schedule-recurrently")
+    public String scheduleRecurrently(
+        @RequestParam(value = "amount", defaultValue = "1") int amount,
+        @RequestParam(value= "interval", defaultValue = "PT5M") Duration interval
+    ) {
+        for(int i = 0; i < amount; i++) {
+            int finalI = i;
+            jobScheduler.createRecurrently(aRecurringJob().withId("rj" + i)
+                    .withInterval(interval)
+//                    .withDuration(interval)
+                    .withDetails(() -> sampleService.executeSampleJob("rj" + finalI)));
+        }
+        return String.format("Scheduled %d recurrently", amount);
     }
 }
