@@ -15,8 +15,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <repositories>
+        <repository>
+            <id>JobRunrPro</id>
+            <url>https://repo.jobrunr.io/private-releases/</url>
+        </repository>
+    </repositories>
+
     <properties>
-        <jobrunr.version>7.3.0</jobrunr.version>
+        <jobrunr.version>7.5.1</jobrunr.version>
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
     </properties>
@@ -40,7 +47,7 @@
         </dependency>
         <dependency>
             <groupId>org.jobrunr</groupId>
-            <artifactId>jobrunr-spring-boot-3-starter</artifactId>
+            <artifactId>jobrunr-pro-spring-boot-3-starter</artifactId>
             <version>${jobrunr.version}</version>
         </dependency>
         <dependency>

@@ -1,0 +1,14 @@
+### Enqueue an Example Job
+GET localhost:8080/enqueue-example-job
+
+### Enqueue an Example Job
+GET localhost:8080/enqueue-example-job-with-record
+
+### Schedule an Example Job
+GET localhost:8080/schedule-example-job?when=PT2M
+
+### Enqueue 1000 rate limited jobs
+GET localhost:8080/enqueue-rate-limited-jobs
+
+### Enqueue Job for Tenant
+GET localhost:8080/enqueue-job-on-dynamic-queue?tenant=Tenant-C

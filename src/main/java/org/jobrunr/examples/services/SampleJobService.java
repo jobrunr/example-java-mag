@@ -38,9 +38,34 @@ public class SampleJobService {
         }
     }
 
+    @Job(name = "The rate limited job with variable %0", retries = 2, rateLimiter = "my-rate-limiter")
+    public void executeRateLimitedJob(String input) throws InterruptedException {
+        logger.info("The sample job has begun. The variable you passed is {}", input);
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            logger.error("Error while executing sample job", e);
+            throw e;
+        } finally {
+            logger.info("Sample job has finished...");
+        }
+    }
+
     @Job
     public void sampleJobWithRecordInput(SampleJobInput sampleJobInput) throws InterruptedException {
         logger.info("The sample job has begun. The variable you passed is {}", sampleJobInput.id());
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            logger.error("Error while executing sample job", e);
+            throw e;
+        } finally {
+            logger.info("Sample job has finished...");
+        }
+    }
+
+    public void executeJobForTenant(String tenant) throws InterruptedException {
+        logger.info("The sample job for tenant {} has begun.", tenant);
         try {
             Thread.sleep(1500);
         } catch (InterruptedException e) {
