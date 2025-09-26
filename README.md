@@ -14,7 +14,7 @@ This project has 2 packages:
 ## How to run this project:
 - clone the project and open it in your favorite IDE that supports gradle
 - First, run the main method from
-  the [JobServerApplication](src/main/java/org/jobrunr/examples/JobRunrApplication.java)
+  the [JobServerApplication](src/main/java/org/jobrunr/examples/JobRunrApplication.java) or by using Maven: `mvn spring-boot:run`.
 - Open your favorite browser:
     - Navigate to the JobRunr dashboard located at http://localhost:8000/dashboard.
     - To enqueue a simple job, open a new tab and go to http://localhost:8080/enqueue-example-job to create the job.
