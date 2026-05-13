@@ -25,11 +25,15 @@ public class SampleJobService {
         }
     }
 
+    public void executeSampleJob() throws InterruptedException {
+        Thread.sleep(500);
+    }
+
     @Job(name = "The sample job with variable %0", retries = 2)
     public void executeSampleJob(String input) throws InterruptedException {
         logger.info("The sample job has begun. The variable you passed is {}", input);
         try {
-            Thread.sleep(1500);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             logger.error("Error while executing sample job", e);
             throw e;
