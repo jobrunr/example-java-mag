@@ -54,7 +54,7 @@ public class CronometerJobController {
         List<UUID> existingJobIds = new ArrayList<>();
 
         for (int i = 0; i < amount; i++) {
-            String rateLimiter = pick(rateLimitersDistribution, random);
+            String rateLimiter = pick(rateLimitersDistribution);
 
             boolean reuseId = !existingJobIds.isEmpty() && random.nextInt(100) < percentOfIdConflicts;
 
@@ -124,8 +124,8 @@ public class CronometerJobController {
         return capacities;
     }
 
-    private String pick(NavigableMap<Double, String> cdf, Random random) {
-        double r = random.nextDouble();
+    private String pick(NavigableMap<Double, String> cdf) {
+        double r = ThreadLocalRandom.current().nextDouble();
         return cdf.higherEntry(r).getValue();
     }
 }
