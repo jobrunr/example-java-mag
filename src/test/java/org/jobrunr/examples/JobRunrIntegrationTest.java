@@ -1,10 +1,12 @@
 package org.jobrunr.examples;
 
 import org.jobrunr.storage.StorageProvider;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.test.web.servlet.client.RestTestClient;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -20,11 +22,20 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 public class JobRunrIntegrationTest {
 
-    @Autowired
-    TestRestTemplate restTemplate;
+    @LocalServerPort
+    int port;
 
     @Autowired
     StorageProvider storageProvider;
+
+    private RestTestClient restClient;
+
+    @BeforeEach
+    void setUp() {
+        restClient = RestTestClient.bindToServer()
+                .baseUrl("http://localhost:" + port)
+                .build();
+    }
 
     @Test
     public void givenEndpoint_whenJobEnqueued_thenJobIsProcessedWithin30Seconds() {
@@ -49,10 +60,16 @@ public class JobRunrIntegrationTest {
     }
 
     private String enqueueJobViaRest(String input) {
-        return restTemplate.getForObject("/enqueue-example-job?name=" + input, String.class);
+        return restClient.get().uri("/enqueue-example-job?name=" + input)
+                .exchange()
+                .returnResult(String.class)
+                .getResponseBody();
     }
 
     private String scheduleJobViaRest(String input, Duration duration) {
-        return restTemplate.getForObject("/schedule-example-job?name=" + input + "&when=" + duration.toString(), String.class);
+        return restClient.get().uri("/schedule-example-job?name=" + input + "&when=" + duration.toString())
+                .exchange()
+                .returnResult(String.class)
+                .getResponseBody();
     }
 }
